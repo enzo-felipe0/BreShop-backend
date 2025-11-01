@@ -14,6 +14,7 @@ class AuthController {
     try {
       const { nome, email, senha, tipoUsuario } = req.body;
 
+      // Validações básicas
       if (!nome || !email || !senha || !tipoUsuario) {
         return res.status(400).json({
           error: 'Todos os campos são obrigatórios',
@@ -26,7 +27,10 @@ class AuthController {
         });
       }
 
-      if (!Object.values(UserType).includes(tipoUsuario)) {
+      // Converter tipoUsuario para maiúsculas e validar
+      const userTypeUpperCase = tipoUsuario.toUpperCase();
+
+      if (!Object.values(UserType).includes(userTypeUpperCase)) {
         return res.status(400).json({
           error: 'Tipo de usuário inválido',
         });
@@ -36,7 +40,7 @@ class AuthController {
         nome,
         email,
         senha,
-        tipoUsuario,
+        tipoUsuario: userTypeUpperCase as UserType,
       });
 
       return res.status(201).json(result);
