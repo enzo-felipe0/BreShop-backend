@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import cors from 'cors';
+import path from 'path';
 import routes from './routes';
 
 const app: Application = express();
@@ -15,6 +16,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Servir arquivos estáticos (imagens)
+app.use('/uploads', express.static(path.resolve(__dirname, '../uploads')));
 
 // Rotas
 app.use('/api', routes);
