@@ -29,10 +29,25 @@ class CartController {
 
       const order = await cartService.checkout(compradorId, items);
 
-      return res.status(201).json({ message: 'Compra finalizada com sucesso!', order });
+      return res.status(201).json({ 
+        message: 'Compra finalizada com sucesso!', 
+        order 
+      });
+
     } catch (error: any) {
       console.error('Erro ao finalizar compra:', error);
-      return res.status(500).json({ error: error.message || 'Erro interno do servidor' });
+
+      // Tratar erro de estoque insuficiente
+      if (error.message && error.message.includes('Estoque insuficiente')) {
+        return res.status(409).json({ error: error.message });
+      }
+
+      // Tratar erro de produto não encontrado
+      if (error.message && error.message.includes('não encontrado')) {
+        return res.status(404).json({ error: error.message });
+      }
+
+      return res.status(500).json({ error: 'Erro interno do servidor' });
     }
   }
 }
