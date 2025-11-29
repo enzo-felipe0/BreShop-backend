@@ -14,7 +14,7 @@ enum UserType {
 
 enum OrderStatus {
   PENDENTE
-  PAGO
+  PROCESSANDO
   ENVIADO
   ENTREGUE
   CANCELADO
@@ -43,9 +43,9 @@ model Product {
   vendedorId  String
   vendedor    User           @relation(fields: [vendedorId], references: [id])
   fotos       ProductImage[]
+  orderItems  OrderItem[]
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
-  orderItems  OrderItem[]
 
   @@map("products")
 }
@@ -61,24 +61,25 @@ model ProductImage {
 }
 
 model Order {
-  id         String      @id @default(uuid())
-  compradorId String
-  comprador   User        @relation(fields: [compradorId], references: [id])
-  items      OrderItem[]
-  status     OrderStatus @default(PENDENTE)
-  total      Float
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id              String      @id @default(uuid())
+  compradorId     String
+  comprador       User        @relation(fields: [compradorId], references: [id])
+  items           OrderItem[]
+  status          OrderStatus @default(PENDENTE)
+  total           Float
+  statusUpdatedAt DateTime    @default(now())
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 
   @@map("orders")
 }
 
 model OrderItem {
-  id        String  @id @default(uuid())
-  orderId   String
-  order     Order   @relation(fields: [orderId], references: [id])
-  productId String
-  product   Product @relation(fields: [productId], references: [id])
+  id         String  @id @default(uuid())
+  orderId    String
+  order      Order   @relation(fields: [orderId], references: [id])
+  productId  String
+  product    Product @relation(fields: [productId], references: [id])
   quantidade Int
   preco      Float
 
