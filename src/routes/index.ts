@@ -4,6 +4,7 @@ import productRoutes from './productRoutes';
 import cartRoutes from './cartRoutes';
 import orderRoutes from './orderRoutes';
 import orderStatusRoutes from './orderStatusRoutes';
+import userRoutes from './userRoutes';
 
 const router = Router();
 
@@ -12,6 +13,7 @@ router.use('/products', productRoutes);
 router.use('/cart', cartRoutes);
 router.use('/orders', orderRoutes);
 router.use('/order-status', orderStatusRoutes);
+router.use('/users', userRoutes);
 
 // Health check
 router.get('/health', (req, res) => {
