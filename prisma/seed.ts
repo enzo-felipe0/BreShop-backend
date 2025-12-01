@@ -42,7 +42,7 @@ async function main() {
       nome: 'Calça Cargo Masculina',
       descricao: 'Linda calça cargo em ótimo estado de conservação. Perfeita para looks retrô!',
       preco: 49.90,
-      quantidade: 3,
+      quantidade: 4,
       vendedorId: vendedor.id,
       fotos: {
         create: [
@@ -60,7 +60,7 @@ async function main() {
       nome: 'Vestido Comprido',
       descricao: 'Vestido longo de verão, leve e confortável. Tamanho M.',
       preco: 89.90,
-      quantidade: 2,
+      quantidade: 4,
       vendedorId: vendedor.id,
       fotos: {
         create: [
