@@ -1,305 +1,226 @@
-# 🗄️ BreShop Backend API
+# BreShop - Plataforma de E-commerce
 
-API REST do BreShop - E-commerce para Brechós Online. Backend desenvolvido com Node.js, Express, TypeScript e SQLite.
+**Nome:** Enzo Felipe Prudencio Avelino Lima  
+**Matrícula:** 20240065606
 
-## 📋 Índice
+---
 
-- [Sobre](#sobre)
-- [Tecnologias](#tecnologias)
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação](#instalação)
-- [Configuração](#configuração)
-- [Como Executar](#como-executar)
-- [Endpoints da API](#endpoints-da-api)
-- [Variáveis de Ambiente](#variáveis-de-ambiente)
-- [Estrutura do Projeto](#estrutura-do-projeto)
+## 📖 Descrição do Projeto
 
-## 🎯 Sobre
+O **BreShop** é uma plataforma de marketplace desenvolvida para facilitar a compra e venda de produtos. O sistema conecta vendedores e compradores em um ambiente intuitivo, permitindo o cadastro de produtos, gestão de carrinho de compras, processamento de pedidos e controle de estoque automatizado. O projeto foi construído utilizando uma arquitetura moderna Full Stack, separando o backend do frontend.
 
-O BreShop Backend é a API que gerencia toda a lógica de autenticação, usuários e autorização para a plataforma BreShop. Ele fornece endpoints seguros com JWT para registrar, autenticar e gerenciar usuários (compradores e vendedores).
+---
 
-## 🚀 Tecnologias
+## 🚀 Tecnologias Utilizadas
 
-- **Node.js** - Runtime JavaScript
-- **Express** - Framework web minimalista
-- **TypeScript** - Superset JavaScript com tipagem estática
-- **Prisma** - ORM para banco de dados
-- **SQLite** - Banco de dados relacional
-- **JWT (jsonwebtoken)** - Autenticação segura
-- **Bcrypt** - Criptografia de senhas
-- **CORS** - Compartilhamento de recursos entre origens
+### Backend
+*   **Node.js** (v18+)
+*   **TypeScript** (v5.x)
+*   **Express** (v4.x) - Framework web robusto
+*   **Prisma ORM** (v5.x) - Manipulação de banco de dados
+*   **SQLite** - Banco de dados relacional (ambiente de desenvolvimento)
+*   **JWT (JsonWebToken)** - Autenticação e segurança de rotas
+*   **Multer** - Gerenciamento de upload de imagens
 
-## 📦 Pré-requisitos
+### Frontend
+*   **React** (v18.x) - Biblioteca para interfaces de usuário
+*   **Vite** (v5.x) - Build tool de alta performance
+*   **TypeScript** - Tipagem estática para maior segurança
+*   **Tailwind CSS** (v3.x) - Framework de estilização utility-first
+*   **Axios** - Consumo de API
+*   **Context API** - Gerenciamento de estado global (Autenticação e Carrinho)
 
-- Node.js (versão 18 ou superior)
-- npm ou yarn
-- Git
+---
 
-## 🔧 Instalação
+## 📋 Pré-requisitos
 
-### 1. Clonar o Repositório
+Para executar este projeto, certifique-se de ter instalado em sua máquina:
+*   [Node.js](https://nodejs.org/) (versão 18 ou superior)
+*   [Git](https://git-scm.com/)
 
+---
+
+## 🔧 Instalação e Configuração
+
+Como o projeto é dividido em dois repositórios, siga os passos abaixo para configurar o ambiente completo.
+
+### 1. Clonar os Repositórios
+
+Recomenda-se criar uma pasta raiz para organizar o projeto:
+
+```bash
+mkdir BreShop-Project
+cd BreShop-Project
+
+# Clone o Backend
+git clone https://github.com/enzo-felipe0/BreShop-backend.git backend
+
+# Clone o Frontend
+git clone https://github.com/enzo-felipe0/BreShop-frontend.git frontend
 ```
-git clone https://github.com/seu-usuario/breshop-backend.git
-cd breshop-backend
-```
 
-### 2. Instalar Dependências
+### 2. Configuração do Backend (API)
 
-```
+```bash
+cd backend
+
+# 2.1 Instalar dependências
 npm install
-```
 
-## ⚙️ Configuração
-
-### 1. Criar Arquivo .env
-
-Crie um arquivo `.env` na raiz do projeto:
-
-```
-# Database
-DATABASE_URL="file:./dev.db"
-
-# JWT
-JWT_SECRET="seu-secret-super-secreto-aqui-mude-em-producao"
-JWT_EXPIRES_IN="7d"
-
-# Server
+# 2.2 Configurar Variáveis de Ambiente
+# Crie um arquivo .env na raiz da pasta backend e insira:
 PORT=3000
-NODE_ENV=development
-
-# Frontend
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="segredo_super_secreto_breshop"
 FRONTEND_URL="http://localhost:5173"
+
+#alguns itens do .env não estão aqui pois realmente são privados
+
+# 2.3 Configurar Banco de Dados
+npx prisma migrate dev --name init
 ```
 
-### 2. Configurar Banco de Dados
+### 3. Configuração do Frontend (Interface)
 
-Gere o Prisma Client:
+Abra um novo terminal para o frontend:
 
+```bash
+cd frontend
+
+# 3.1 Instalar dependências
+npm install
+
+# 3.2 Configurar Variáveis de Ambiente
+# Crie um arquivo .env na raiz da pasta frontend e insira:
+VITE_API_URL="http://localhost:3000/api"
 ```
-dotenv -e .env -- npx prisma generate
-```
 
-Crie as migrations:
+---
 
-```
-dotenv -e .env -- npx prisma migrate dev --name init
-```
+## ▶️ Instruções de Execução
 
-Isso criará o arquivo `prisma/dev.db` com as tabelas necessárias.
+Você precisará de dois terminais abertos simultaneamente.
 
-## ▶️ Como Executar
-
-### Modo Desenvolvimento
-
-```
+**Terminal 1 - Backend:**
+```bash
+cd backend
 npm run dev
 ```
+*O servidor iniciará em: `http://localhost:3000`*
 
-O servidor iniciará em: [**http://localhost:3000**](http://localhost:3000)
-
-Você verá:
-
-🚀 Server is running on http://localhost:3000
-📚 API Docs available at http://localhost:3000/
-🗄️ Database: SQLite (prisma/dev.db)
-
-### Build para Produção
-
+**Terminal 2 - Frontend:**
+```bash
+cd frontend
+npm run dev
 ```
-npm run build
-```
+*A aplicação abrirá em: `http://localhost:5173`*
 
-### Iniciar em Produção
+---
 
-```
-npm start
-```
+## 📂 Estrutura do Projeto
 
-### Visualizar Banco de Dados
+### Backend
+*   `src/controllers`: Lógica das requisições (Auth, Produtos, Pedidos).
+*   `src/routes`: Definição dos endpoints da API.
+*   `src/services`: Regras de negócio.
+*   `src/middlewares`: Autenticação e validações.
+*   `prisma/schema.prisma`: Modelagem do banco de dados.
 
-```
-npm run db:studio
-```
+### Frontend
+*   `src/pages`: Telas da aplicação (Home, Login, Dashboard, Checkout).
+*   `src/components`: Componentes reutilizáveis (Navbar, ProductCard).
+*   `src/contexts`: Estados globais (AuthContext, CartContext).
+*   `src/services`: Configuração do Axios.
 
-Abrirá interface web em: [**http://localhost:5555**](http://localhost:5555)
+---
 
-## 📡 Endpoints da API
+## ✅ Funcionalidades Implementadas
 
-### Health Check
+O sistema atende aos seguintes requisitos funcionais:
 
-**GET** `/api/health`
+- [x] **Cadastro de Usuários:** Vendedor e Comprador podem criar conta com Nome, E-mail, Senha e Tipo.
+- [x] **Autenticação:** Login seguro via E-mail e Senha (JWT).
+- [x] **Gestão de Produtos:** Vendedor cadastra produtos com nome, descrição, preço, quantidade e upload de fotos.
+- [x] **Catálogo:** Exibição pública dos produtos na Home.
+- [x] **Carrinho de Compras:** Comprador adiciona itens e visualiza resumo.
+- [x] **Finalização de Compra:** Registro do pedido e baixa automática no estoque.
+- [x] **Histórico de Transações:**
+    - Comprador visualiza suas compras.
+    - Vendedor visualiza suas vendas.
+- [x] **Status do Pedido:** Acompanhamento (Em processamento, Enviado, Entregue).
+- [x] **Edição de Perfil:** Atualização de dados cadastrais básicos.
+- [x] **Notificações:** Envio de e-mail na confirmação do pedido.
 
-Verifica se a API está funcionando.
+---
 
-**Response (200 OK):**
+## 🗄️ Modelo de Dados
 
-```
-{
-"status": "OK",
-"timestamp": "2025-11-01T21:35:00.000Z"
-}
-```
+O banco de dados (SQLite via Prisma) possui as seguintes entidades principais:
 
-### Registrar Usuário
+*   **User:** Armazena dados de acesso e perfil.
+*   **Product:** Dados do item à venda, relacionado ao User (vendedor).
+*   **ProductPhoto:** URLs das imagens vinculadas ao Produto.
+*   **Order:** Cabeçalho do pedido, vinculado ao User (comprador).
+*   **OrderItem:** Itens do pedido, registrando preço no momento da compra.
 
-**POST** `/api/auth/register`
+*(Verifique a pasta `prisma/schema.prisma` para detalhes das relações)*
 
-Cria uma nova conta de usuário.
+---
 
-**Headers:**
-Content-Type: application/json
+## 🔌 Rotas da API
 
-**Body:**
+*   `POST /auth/register` - Criar conta
+*   `POST /auth/login` - Autenticar
+*   `GET /products` - Listar produtos
+*   `GET /products/:id` - Detalhes do produto
+*   `POST /products` - Criar produto (Auth + Vendedor)
+*   `POST /cart/checkout` - Realizar compra (Auth + Comprador)
+*   `GET /orders/my-orders` - Histórico de compras
+*   `GET /orders/sales` - Histórico de vendas
 
-```
-{
-"nome": "João Silva",
-"email": "joao@example.com",
-"senha": "senha123",
-"tipoUsuario": "COMPRADOR"
-}
-```
-**Response (201 Created):**
-```
-{
-"user": {
-"id": "uuid-gerado",
-"nome": "João Silva",
-"email": "joao@example.com",
-"tipoUsuario": "COMPRADOR"
-},
-"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-```
+---
 
-**Tipos de Usuário:**
-- `COMPRADOR` - Usuário que compra produtos
-- `VENDEDOR` - Usuário que vende produtos
+## 📸 Screenshots
 
-**Validações:**
-- Nome é obrigatório
-- Email é obrigatório e deve ser único
-- Senha deve ter no mínimo 6 caracteres
-- tipoUsuario deve ser COMPRADOR ou VENDEDOR
+Abaixo estão os links para as capturas de tela das principais funcionalidades:
+  * Home:
+  ![Home](screenshots/home.png)
+  * Produtos exibidos na Home
+   ![Produtos na Home](screenshots/home_produtos.png)
+   * Página de produto
+  ![Produto Page](screenshots/produtos.png)
+  * Tela de Login
+  ![Tela de Login](screenshots/login.png)
+  * Carrinho
+  ![Carrinho de Compras](screenshots/carrinho.png)
+  * Cadastro de Produtos
+   ![Cadastrar Produtos](screenshots/cadastrar_produtos.png)
+   * Histórico de Vendas
+   ![Histórico de Vendas](screenshots/vendas.png)
 
-### Login
+   * Pedidos
+   ![Meus Pedidos](screenshots/pedidos.png)
 
-**POST** `/api/auth/login`
+---
 
-Autentica um usuário existente.
+## 🎥 Vídeo Demonstrativo
 
-**Headers:**
+Confira a demonstração completa do sistema em funcionamento:
+[Link para o Vídeo](https://youtu.be/Yw8EwrRXClA)
 
-Content-Type: application/json
+---
 
-**Body:**
+## 💡 Decisões Técnicas e Justificativas
 
-```
-{
-"email": "joao@example.com",
-"senha": "senha123"
-}
-```
+1.  **Prisma + SQLite:** Escolhido pela facilidade de configuração local e excelente suporte a TypeScript, permitindo desenvolvimento ágil sem configurar servidores de banco complexos.
+2.  **Tailwind CSS:** Utilizado para acelerar a estilização e garantir responsividade sem a necessidade de escrever CSS puro extenso. Além de familiaridade prévia.
+3. **Ambiente JavaScript (React + Node):** Escolhi um ambiente JS devido a minha familiaridade prévia. Não queria ter surpresas indesejadas que as vezes ocorrem quando lidamos com tecnologias novas.  
 
-**Response (200 OK):**
-```
-{
-"user": {
-"id": "uuid-do-usuario",
-"nome": "João Silva",
-"email": "joao@example.com",
-"tipoUsuario": "COMPRADOR"
-},
-"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-```
+---
 
-### Obter Dados do Usuário
+## 🔮 Melhorias Futuras
 
-**GET** `/api/auth/me`
-
-Retorna os dados do usuário autenticado. Requer autenticação.
-
-**Headers:**
-Authorization: Bearer seu-token-aqui
-**Response (200 OK):**
-```
-{
-"user": {
-"id": "uuid-do-usuario",
-"nome": "João Silva",
-"email": "joao@example.com",
-"tipoUsuario": "COMPRADOR",
-"createdAt": "2025-11-01T20:30:00.000Z",
-"updatedAt": "2025-11-01T20:30:00.000Z"}
-}
-```
-
-## 🔐 Variáveis de Ambiente
-
-| Variável | Descrição | Padrão |
-|----------|-----------|--------|
-| DATABASE_URL | URL do banco de dados SQLite | `file:./dev.db` |
-| JWT_SECRET | Chave secreta para assinar tokens JWT | Deve ser definida |
-| JWT_EXPIRES_IN | Tempo de expiração do token | `7d` |
-| PORT | Porta do servidor | `3333` |
-| NODE_ENV | Ambiente (development/production) | `development` |
-| FRONTEND_URL | URL do frontend (para CORS) | `http://localhost:5173` |
-
-## 📁 Estrutura do Projeto
-
-```
-breshop-backend/
-├── prisma/
-│ ├── dev.db # Banco de dados SQLite
-│ ├── migrations/ # Histórico de migrações
-│ └── schema.prisma # Schema do banco de dados
-├── src/
-│ ├── config/
-│ │ └── database.ts # Configuração Prisma Client
-│ ├── controllers/
-│ │ └── authController.ts
-│ ├── services/
-│ │ └── authService.ts
-│ ├── routes/
-│ │ ├── index.ts
-│ │ └── authRoutes.ts
-│ ├── middlewares/
-│ │ └── authMiddleware.ts
-│ ├── types/
-│ ├── utils/
-│ │ ├── jwt.ts
-│ │ └── password.ts
-│ ├── app.ts
-│ └── server.ts
-├── .env
-├── .gitignore
-├── nodemon.json
-├── package.json
-├── tsconfig.json
-└── README.md
-```
-## 🏗️ Arquitetura em Camadas
-
-O projeto segue uma arquitetura em camadas:
-
-- **Routes** - Define os endpoints da API
-- **Controllers** - Valida requisições e coordena respostas
-- **Services** - Contém a lógica de negócio
-- **Middlewares** - Processa requisições (autenticação, validação)
-- **Utils** - Funções auxiliares (JWT, hash de senhas)
-- **Config** - Configurações (banco de dados)
-
-## 📝 Notas Importantes
-
-- **Senhas:** Sempre hasheadas com bcrypt antes de salvar
-- **Tokens:** Válidos por 7 dias (configurável)
-- **CORS:** Aceita requisições do frontend configurado em FRONTEND_URL
-- **Banco de Dados:** SQLite facilita deploy.
-
-## 👨‍💻 Autor
-
-Enzo Felipe Prudencio Avelino Lima
-Matrícula: 20240065606
-
+*   Integração com gateway de pagamentos real (Stripe/Mercado Pago).
+*   Sistema de chat em tempo real entre vendedor e comprador.
+*   Deploy da aplicação em nuvem (Render/Vercel).
+*   Implementação de testes unitários e de integração (Jest/Cypress).
